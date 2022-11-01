@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-post-delete
+  annotations:
+    "helm.sh/hook": post-delete
+spec:
+  template:
+    metadata:
+      name: {{ .Release.Name }}-post-delete
+    spec:
+      containers:
+      - name: post-delete
+        image: busybox
+        command: ["echo",  "I am done with cleanup!"]
+      restartPolicy: Never
+  backoffLimit: 4

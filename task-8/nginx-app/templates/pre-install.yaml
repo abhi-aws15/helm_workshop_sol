@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-pre-install
+  annotations:
+    "helm.sh/hook": pre-install
+spec:
+  template:
+    metadata:
+      name: {{ .Release.Name }}-pre-install
+    spec:
+      containers:
+      - name: pre-install
+        image: busybox
+        command: ["echo",  "I am performing prerequisite tasks!"]
+      restartPolicy: Never
+  backoffLimit: 4
